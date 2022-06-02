@@ -28,17 +28,13 @@ namespace BioCal
                 }
             };
             chart.AxisX = new AxesCollection
+            {
+                new Axis()
                 {
-                     new Axis()
-                     {
                          Title = "Даты",
-                         MinValue = 1
-                         
-                         
-                         
-                         
-                     }
-                };
+                         MinValue = 1                                               
+                }
+            };
 
         }
 
@@ -65,20 +61,7 @@ namespace BioCal
             birthdate = Convert.ToDateTime(BirthDate.Text);
             startdate = Convert.ToDateTime(StartDate.Text);
             stats.Clear();
-            for (int i = 0; i < Convert.ToInt32(Duration.Text); i++)
-            {
-                stats.Add(new Stats()
-                {
-                    Date = startdate.ToShortDateString(),
-                    Strength = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 23), 4),
-                    Agility = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 28), 4),
-                    Intelligence = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 33), 4),
-                    Sum = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 23), 4)
-                    + Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 28), 4)
-                    + Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 33), 4)
-                });
-                startdate = startdate.AddDays(1);
-            }
+            stats = Bio.GenerateList(birthdate, startdate, Convert.ToInt32(Duration.Text));  
             Dates.Items.Refresh();
             double maxstrenght = double.MinValue;
             double maxagility = double.MinValue;
@@ -168,8 +151,6 @@ namespace BioCal
             chart.Update();
         }
 
-        private void ExportToWord_Click(object sender, RoutedEventArgs e)
-        {
-        }
+       
     }
 }
