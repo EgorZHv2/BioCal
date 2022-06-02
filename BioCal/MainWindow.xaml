@@ -70,7 +70,7 @@
             </StackPanel>
         </Border>
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Border}">
-            <lvc:CartesianChart Name="chart"  LegendLocation="Right">
+            <lvc:CartesianChart Name="chart"  LegendLocation="Bottom">
             </lvc:CartesianChart>
         </Border>
     </Grid>
