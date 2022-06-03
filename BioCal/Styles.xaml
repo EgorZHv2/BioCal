@@ -8,10 +8,10 @@
         <Setter Property="LastChildFill" Value="False"></Setter>
         <Setter Property="Margin" Value="5"></Setter>
     </Style>
-    <Style x:Key="Border" TargetType="Border">
+    <Style x:Key="GroupStyle" TargetType="GroupBox">
         <Setter Property="Margin" Value="5"></Setter>
         <Setter Property="BorderBrush" Value="Black"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
-        <Setter Property="CornerRadius" Value="5"></Setter>
+
     </Style>
 </ResourceDictionary>

@@ -19,13 +19,13 @@ namespace BioCal
                     Strength = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 23), 4),
                     Agility = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 28), 4),
                     Intelligence = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 33), 4),
-                    Sum = Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 23), 4)
-                    + Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 28), 4)
-                    + Math.Round(Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 33), 4)
+                    Sum =  Math.Round(((Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 23) 
+                    + Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 28)
+                    + Math.Sin((3.14 * 2 * (startdate - birthdate).Days) / 33))/3),4)
                 });
                 startdate = startdate.AddDays(1);
             }
-            return list;
+            return  list;
         }
     }
     

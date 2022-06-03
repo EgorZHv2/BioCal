@@ -3,75 +3,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodels="clr-namespace:BioCal.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="Биокалькулятор" Height="600" Width="1000">
+    <Window.DataContext>
+        <viewmodels:MainVM></viewmodels:MainVM>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="3*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Style="{StaticResource Border}">
-            <StackPanel   Orientation="Vertical">
-                <TextBlock>Исходные данные</TextBlock>
-                <DockPanel Style="{StaticResource DockPanel}">
-                    <TextBlock DockPanel.Dock="Left" >Дата рождения</TextBlock>
-                    <DatePicker Name="BirthDate" DockPanel.Dock="Right" Style="{StaticResource DatePicker}" HorizontalAlignment="Stretch" />
-                </DockPanel>
-                <DockPanel Style="{StaticResource DockPanel}">
-                    <TextBlock DockPanel.Dock="Left">Дата отсчёта</TextBlock>
-                    <DatePicker  Name="StartDate" DockPanel.Dock="Right" Style="{StaticResource DatePicker}"></DatePicker>
-                </DockPanel>
-                <DockPanel Style="{StaticResource DockPanel}">
-                    <TextBlock DockPanel.Dock="Left">Длительность прогноза</TextBlock>
-                    <TextBox Name="Duration" DockPanel.Dock="Right" MinWidth="100"></TextBox>
-                </DockPanel>
-
-                <CheckBox Margin="5">
-                    <TextBox TextWrapping="Wrap" BorderThickness="0">Произвольная ввод длительности прогноза</TextBox>
-                </CheckBox>
-                <TextBox Margin="5" MinWidth="50" Width="50" HorizontalAlignment="Right" IsReadOnly="True" >100</TextBox>
-            </StackPanel>
-        </Border>
-        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Border}">
-            <DataGrid IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" Name="Dates">
+        <GroupBox Style="{StaticResource GroupStyle}" Header="Исходные данные">
+            <Frame Name="InputPagesFrame" Content="{Binding InputPage}"></Frame>
+        </GroupBox>
+        <GroupBox Header="Рассчётные данные" Grid.Row="0" Grid.Column="1" Style="{StaticResource GroupStyle}">
+            <DataGrid IsReadOnly="True" ItemsSource="{Binding List}" CanUserAddRows="False" AutoGenerateColumns="False" Name="Dates">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Дата" Binding="{Binding Date}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Физический ритм" Binding="{Binding Strength}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Эмоциональный ритм" Binding="{Binding Agility}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Интелектуальный ритм" Binding="{Binding Intelligence}"></DataGridTextColumn>
-                    <DataGridTextColumn Width="*" Header="Суммарное" Binding="{Binding Sum}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Среднее" Binding="{Binding Sum}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </Border>
-        <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Border}">
-            <StackPanel  Margin="5" Grid.Row="0" Grid.Column="2">
-                <TextBlock>Статистика</TextBlock>
-                <TextBlock Name="StatBirthDate"></TextBlock>
-                <TextBlock Name="StatDuration"></TextBlock>
-                <TextBlock Name="StatPeriod"></TextBlock>
-                <TextBlock Name="StatMaxStrenght"></TextBlock>
-                <TextBlock Name="StatMaxAgility"></TextBlock>
-                <TextBlock Name="StatMaxIntelligence"></TextBlock>
-                <TextBlock Name="StatMaxSum"></TextBlock>
-            </StackPanel>
-        </Border>
-        <Border Style="{StaticResource Border}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+        </GroupBox>
+        <GroupBox Header="Статистика" Grid.Row="0" Grid.Column="2" Style="{StaticResource GroupStyle}">
+            <Button Click="Button_Click" Content="Button" HorizontalAlignment="Left" Margin="52,0,0,0" VerticalAlignment="Top"/>
+        </GroupBox>
+        <GroupBox Header="Управление графиком" Style="{StaticResource GroupStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
             <StackPanel  Orientation="Horizontal">
-                <Button Name="GenerateGraph" Click="GenerateGraph_Click" Margin="5">Построить график</Button>
-                <Button Name="ExportToWord" Click="ExportToWord_Click" Margin="5">Передать в Word</Button>
+                <Button Name="GenerateGraph" Command="{Binding GenerateGraph}" Margin="5">Построить график</Button>
+                <Button Name="ExportToWord" Margin="5">Передать в Word</Button>
                 <CheckBox Name="DateRequired" Margin="5">Выводить дату на шкале</CheckBox>
             </StackPanel>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Border}">
-            <lvc:CartesianChart Name="chart"  LegendLocation="Bottom">
+        </GroupBox>
+        <GroupBox Header="График" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource GroupStyle}">
+            <lvc:CartesianChart Name="chart" Series="{Binding Series}"  LegendLocation="Bottom">
+                <lvc:CartesianChart.AxisX >
+                    <lvc:Axis Title="Даты"  Labels="{Binding X}" ></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY> 
+                    <lvc:Axis Title="Значения" MinValue="-1" MaxValue="1"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
-        </Border>
+        </GroupBox>
     </Grid>
 </Window>
