@@ -3,24 +3,26 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BioCal.Pages"
+      xmlns:local="clr-namespace:BioCal.Pages" xmlns:viewmodels="clr-namespace:BioCal.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SecondPersonInputPage">
-
+    <Page.DataContext>
+        <viewmodels:SecondPersonInputPageVM></viewmodels:SecondPersonInputPageVM>
+    </Page.DataContext>
     <StackPanel   Orientation="Vertical">
         <Frame Name="InputFrame"></Frame>
         <DockPanel Style="{StaticResource DockPanel}">
             <TextBlock DockPanel.Dock="Left" >Дата рождения</TextBlock>
-            <DatePicker Name="BirthDate" DockPanel.Dock="Right" Style="{StaticResource DatePicker}" HorizontalAlignment="Stretch" />
+            <DatePicker Name="BirthDate" SelectedDate="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Style="{StaticResource DatePicker}" HorizontalAlignment="Stretch" />
         </DockPanel>
         <DockPanel Style="{StaticResource DockPanel}">
             <TextBlock DockPanel.Dock="Left">Дата отсчёта</TextBlock>
-            <DatePicker  Name="StartDate" DockPanel.Dock="Right" Style="{StaticResource DatePicker}"></DatePicker>
+            <DatePicker  Name="StartDate" SelectedDate="{Binding StartDate , UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" Style="{StaticResource DatePicker}"></DatePicker>
         </DockPanel>
         <DockPanel Style="{StaticResource DockPanel}">
             <TextBlock DockPanel.Dock="Left">Длительность прогноза</TextBlock>
-            <TextBox Name="Duration" DockPanel.Dock="Right" MinWidth="100"></TextBox>
+            <TextBox Name="Duration" DockPanel.Dock="Right" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" MinWidth="100"></TextBox>
         </DockPanel>
     </StackPanel>
 </Page>

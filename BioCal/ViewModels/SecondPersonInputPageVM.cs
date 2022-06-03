@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BioCal.ViewModels
 {
-    public class SecondPersonInputPage:BaseVM,IInputPageVM
+    public class SecondPersonInputPageVM:BaseVM,IInputPageVM
     {
-       public SecondPersonInputPage()
+       public SecondPersonInputPageVM()
         {
             BirthDate = new DateTime(2002, 03, 28);
             StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);

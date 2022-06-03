@@ -21,7 +21,11 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <GroupBox Style="{StaticResource GroupStyle}" Header="Исходные данные">
-            <Frame Name="InputPagesFrame" Content="{Binding InputPage}"></Frame>
+            <StackPanel>
+            <Frame NavigationUIVisibility="Hidden" Name="InputPagesFrame" Content="{Binding InputPage}"></Frame>
+                <RadioButton GroupName="InputPersonPage" IsChecked="{Binding PageSelector}">Первый человек</RadioButton>
+                <RadioButton GroupName="InputPersonPage" >Второй человек</RadioButton>
+            </StackPanel>
         </GroupBox>
         <GroupBox Header="Рассчётные данные" Grid.Row="0" Grid.Column="1" Style="{StaticResource GroupStyle}">
             <DataGrid IsReadOnly="True" ItemsSource="{Binding List}" CanUserAddRows="False" AutoGenerateColumns="False" Name="Dates">
@@ -30,18 +34,19 @@
                     <DataGridTextColumn Width="*" Header="Физический ритм" Binding="{Binding Strength}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Эмоциональный ритм" Binding="{Binding Agility}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Интелектуальный ритм" Binding="{Binding Intelligence}"></DataGridTextColumn>
-                    <DataGridTextColumn Width="*" Header="Среднее" Binding="{Binding Sum}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Среднее" Binding="{Binding Average}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
         <GroupBox Header="Статистика" Grid.Row="0" Grid.Column="2" Style="{StaticResource GroupStyle}">
-            <Button Click="Button_Click" Content="Button" HorizontalAlignment="Left" Margin="52,0,0,0" VerticalAlignment="Top"/>
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Statistics}"></ListBox>
         </GroupBox>
         <GroupBox Header="Управление графиком" Style="{StaticResource GroupStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
             <StackPanel  Orientation="Horizontal">
-                <Button Name="GenerateGraph" Command="{Binding GenerateGraph}" Margin="5">Построить график</Button>
-                <Button Name="ExportToWord" Margin="5">Передать в Word</Button>
-                <CheckBox Name="DateRequired" Margin="5">Выводить дату на шкале</CheckBox>
+                <Button  Command="{Binding GenerateGraph}" Margin="5">Посчитать и построить график</Button>
+                <Button Command="{Binding GenetateСompatibility}" Margin="5">Показать совместимость людей</Button>
+                <Button Name="ExportToWord" Command="{Binding ExportToCsv}" Margin="5">Экспорт в CSV</Button>
+                <CheckBox Name="DateRequired" IsChecked="{Binding ShowData}" Margin="5">Выводить дату на шкале</CheckBox>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="График" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource GroupStyle}">
@@ -50,7 +55,7 @@
                     <lvc:Axis Title="Даты"  Labels="{Binding X}" ></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY> 
-                    <lvc:Axis Title="Значения" MinValue="-1" MaxValue="1"></lvc:Axis>
+                    <lvc:Axis Title="Значения" ></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </GroupBox>
